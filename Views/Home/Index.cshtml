@@ -1,0 +1,45 @@
+﻿@model IEnumerable<PetShopMosh.Models.Animal>
+
+@{
+    ViewBag.Title = "Animal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>The Best Pet Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+    <h1></h1>
+    @await Html.PartialAsync("MyPartialView")
+    <div class="container mt-5">
+        <div>the 2 most rated animals in the shop now:</div>
+        <div style="margin-bottom: 20px;"></div>
+        <div class="row">
+            @foreach (var animal in Model)
+            {
+                var imagePath = $"~/images/{animal.PictureName}";
+
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <img src="@Url.Content(imagePath)" class="card-img-top" alt="IMAGE INVALID" width="150" height="150">
+                        <div class="card-body">
+                            <h5 class="card-title">@animal.Name</h5>
+                            <p class="card-text">@animal.Descripotion</p>
+                            <p class="card-text">Number of Comments: @animal.Comments?.Count()</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+
+     
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

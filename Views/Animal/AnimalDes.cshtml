@@ -1,0 +1,90 @@
+﻿@model IEnumerable<PetShopMosh.Models.Animal>
+
+@{
+    ViewBag.Title = "Animal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>The Best Pet Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        .table-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+            .table-container table {
+                margin-bottom: 20px;
+            }
+    </style>
+</head>
+<body>
+    @await Html.PartialAsync("MyPartialView")
+    <div class="container mt-5">
+        <div class="table-container">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">My Portrait</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Category Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var animal in Model)
+                    {
+                        var imagPath = $"{animal.PictureName}";
+
+                        <tr>
+                            <td><img src="~/images/@imagPath" width="150" height="150" alt="IMAGE INVALID"></td>
+                            <td>@animal.Name</td>
+                            <td>@animal.Descripotion</td>
+                            <td>@ViewBag.CategoryName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Comments for this Animal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var comment in ViewBag.Comments)
+                    {
+                        <tr>
+                            <td>@comment.Content</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+   
+    <!-- Rest of the code -->
+</body>
+</html>
+
+
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="container mt-5">
+    <h2>Add a Comment</h2>
+    <form action="/Animal/AddComment" method="post">
+        <textarea name="content" placeholder="Enter your comment" required></textarea>
+        <input type="hidden" name="animalId" value="@Model.First().AnimalId" />
+        <button type="submit">Add Comment</button>
+    </form>
+</div>
